@@ -16,6 +16,10 @@ export const metadata: Metadata = {
     template: "%s | Presentiq",
   },
   description: defaultDescription,
+  // Google Search Console ownership (URL-prefix property).
+  verification: {
+    google: "eIToGIhuCy8HWWXtDLYtsDXVEAdf99nnbdzHTkWAOCk",
+  },
   openGraph: {
     siteName: "Presentiq",
     type: "website",
