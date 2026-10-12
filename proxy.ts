@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { analyticsHosts } from '@/src/lib/analytics'
 
 const locales = ['en', 'de']
 
@@ -21,9 +22,9 @@ function contentSecurityPolicy(nonce: string): string {
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ''};
     style-src 'self' 'unsafe-inline'${consentHosts};
-    img-src 'self' data: blob: https://cdn.sanity.io${consentHosts};
+    img-src 'self' data: blob: https://cdn.sanity.io${consentHosts}${analyticsHosts};
     font-src 'self' data:${consentHosts};
-    connect-src 'self'${consentHosts};
+    connect-src 'self'${consentHosts}${analyticsHosts};
     media-src 'self' https://cdn.sanity.io;
     object-src 'none';
     base-uri 'self';

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { headers } from "next/headers";
 import { siteUrl } from "@/src/lib/siteUrl";
 import { DEFAULT_OG_IMAGE } from "@/src/lib/pageMetadata";
+import { GA_MEASUREMENT_ID, analyticsEnabled, consentDefaultScript } from "@/src/lib/analytics";
 import "./globals.css";
 
 const defaultDescription =
@@ -46,12 +47,28 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
+        {analyticsEnabled && (
+          <Script
+            id="consent-default"
+            strategy="beforeInteractive"
+            nonce={nonce}
+            dangerouslySetInnerHTML={{ __html: consentDefaultScript }}
+          />
+        )}
         {usercentricsSettingsId && (
           <Script
             id="usercentrics-cmp"
             src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
             data-settings-id={usercentricsSettingsId}
             strategy="beforeInteractive"
+            nonce={nonce}
+          />
+        )}
+        {analyticsEnabled && (
+          <Script
+            id="gtag"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
             nonce={nonce}
           />
         )}
