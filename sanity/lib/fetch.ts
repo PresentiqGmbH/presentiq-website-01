@@ -226,6 +226,10 @@ export async function getPrivacyPolicy() {
   return fetchContent(`*[_type == "privacyPolicy"][0]`)
 }
 
+export async function getTermsAndConditions() {
+  return fetchContent(`*[_type == "termsAndConditions"][0]`)
+}
+
 export async function getHomepage() {
   return fetchContent(`*[_type == "homepage"][0]{
     ...,

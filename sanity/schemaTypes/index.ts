@@ -34,6 +34,7 @@ import howWeWork from './howWeWork'
 import portfolio from './portfolio'
 import legalNotice from './legalNotice'
 import privacyPolicy from './privacyPolicy'
+import termsAndConditions from './termsAndConditions'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -72,5 +73,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     portfolio,
     legalNotice,
     privacyPolicy,
+    termsAndConditions,
   ],
 }

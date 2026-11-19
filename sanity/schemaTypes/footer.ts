@@ -56,6 +56,7 @@ export default {
                         { type: 'portfolio' },
                         { type: 'legalNotice' },
                         { type: 'privacyPolicy' },
+                        { type: 'termsAndConditions' },
                       ],
                     },
                     {

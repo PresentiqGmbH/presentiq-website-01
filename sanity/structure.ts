@@ -1,6 +1,6 @@
 import type {StructureResolver} from 'sanity/structure'
 
-const singletonTypes = new Set(['navigation', 'footer', 'contact', 'about', 'howWeWork', 'portfolio', 'legalNotice', 'privacyPolicy'])
+const singletonTypes = new Set(['navigation', 'footer', 'contact', 'about', 'howWeWork', 'portfolio', 'legalNotice', 'privacyPolicy', 'termsAndConditions'])
 // Document types pinned explicitly below with their own (non-singleton) list
 // item, so the generic auto-generated section at the bottom shouldn't
 // duplicate them. Storytelling/AI Design are singletons too, but they're
@@ -96,6 +96,10 @@ export const structure: StructureResolver = (S) =>
         .title('Privacy Policy Page')
         .id('privacyPolicy')
         .child(S.document().schemaType('privacyPolicy').documentId('privacyPolicy')),
+      S.listItem()
+        .title('Terms and Conditions Page (AGB)')
+        .id('termsAndConditions')
+        .child(S.document().schemaType('termsAndConditions').documentId('termsAndConditions')),
       S.divider(),
       // All service content in one folder: the generic Service list plus the
       // services with their own singleton documents. Storytelling, Templates

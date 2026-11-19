@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { siteUrl } from '@/src/lib/siteUrl'
-import { getServiceSlugs, getCaseStudySlugs } from '@/sanity/lib/fetch'
+import { getServiceSlugs, getCaseStudySlugs, getTermsAndConditions } from '@/sanity/lib/fetch'
 
 const locales = ['en', 'de'] as const
 
@@ -15,7 +15,11 @@ const staticPaths = [
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [services, caseStudies] = await Promise.all([getServiceSlugs(), getCaseStudySlugs()])
+  const [services, caseStudies, terms] = await Promise.all([
+    getServiceSlugs(),
+    getCaseStudySlugs(),
+    getTermsAndConditions(),
+  ])
   const servicePaths = services
     .filter((service: { slug: string }) => service.slug)
     .map((service: { slug: string }) => `/services/${service.slug}`)
@@ -23,7 +27,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((cs: { slug: string }) => cs.slug)
     .map((cs: { slug: string }) => `/${cs.slug}`)
 
-  const paths = [...staticPaths, ...servicePaths, ...caseStudyPaths]
+  // Listed once the terms are published (the page returns 404 until then).
+  const termsPaths = terms?.body?.de?.length || terms?.body?.en?.length ? ['/terms-and-conditions'] : []
+
+  const paths = [...staticPaths, ...termsPaths, ...servicePaths, ...caseStudyPaths]
 
   return paths.flatMap((path) =>
     locales.map((locale) => ({
