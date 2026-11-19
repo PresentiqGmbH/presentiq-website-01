@@ -3,6 +3,9 @@ import Navigation from "@/src/components/organisms/Navigation";
 import Footer from "@/src/components/organisms/footer";
 import BackToTopButton from "@/src/components/atoms/BackToTopButton";
 import IntroLoader from "@/src/components/organisms/IntroLoader";
+import CookieBanner from "@/src/components/organisms/CookieBanner";
+import GoogleAnalytics from "@/src/components/analytics/GoogleAnalytics";
+import { GA_MEASUREMENT_ID, analyticsEnabled } from "@/src/lib/analytics";
 import { getNavigation, getFooter, getServicesSection } from "@/sanity/lib/fetch";
 import { siteUrl } from "@/src/lib/siteUrl";
 import { toJsonLd } from '@/src/lib/hyphenate'
@@ -71,6 +74,8 @@ export default async function LocaleLayout({
       {children}
       <Footer data={footerData} services={servicesSectionData?.services} locale={locale as 'en' | 'de'} />
       <BackToTopButton />
+      <CookieBanner locale={locale as 'en' | 'de'} />
+      <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} enabled={analyticsEnabled} />
     </div>
   );
 }

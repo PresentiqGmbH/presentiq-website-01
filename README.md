@@ -33,7 +33,6 @@ Set in `.env.local` for development and in the hosting environment for productio
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL, e.g. `https://presentiq.de` (canonical links, sitemap, link previews) |
-| `NEXT_PUBLIC_USERCENTRICS_SETTINGS_ID` | Usercentrics cookie banner; optional |
 | `MS_GRAPH_TENANT_ID` | Microsoft 365 tenant of the mailbox that sends contact form mail |
 | `MS_GRAPH_CLIENT_ID` | Entra ID app registration for the contact form |
 | `MS_GRAPH_CLIENT_SECRET` | Secret of that app registration (server only) |
@@ -60,6 +59,7 @@ public/               Static assets, icons, llms.txt
 
 - **Layout tiers:** phones and portrait tablets share one stacked layout; the desktop layout starts at 1104px. See the comment at the top of `app/globals.css` for the breakpoints.
 - **Images** are resized and compressed by the Sanity CDN (`src/lib/imageLoader.ts`), not by the Next.js image optimizer.
+- **Analytics and consent:** Google Analytics 4 loads only on the production deployment and only after the visitor accepts it in the site's own cookie banner (`src/components/organisms/CookieBanner.tsx`); the choice is kept in localStorage.
 - **Security headers:** a per-request nonce Content Security Policy is set in `proxy.ts`; the remaining headers are in `next.config.ts`.
 - **CMS text** is typeset and hyphenated on the server (`src/lib/typography.ts`, `src/lib/hyphenate.ts`) so long German words wrap correctly on every device.
 

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Text from '@/src/components/atoms/Text'
-import PrivacySettingsButton from '@/src/components/atoms/PrivacySettingsButton'
+import CookieSettingsButton from '@/src/components/atoms/CookieSettingsButton'
 import { urlFor } from '@/sanity/lib/image'
 import { resolveLocale } from '@/src/lib/locale'
 import type { SanityImageValue } from '@/src/types/sanity'
@@ -35,7 +35,6 @@ interface FooterData {
   phone: string
   columns: FooterColumn[]
   copyright: { en: string; de: string }
-  privacySettingsLabel?: { en: string; de: string }
 }
 
 interface FooterProps {
@@ -127,16 +126,24 @@ export default function Footer({ data, services, locale }: FooterProps) {
           {legalColumn &&
             renderColumn(
               legalColumn._key,
-              legalColumn.links?.map((link) => (
-                <li key={link._key}>
-                  <Link
-                    href={`/${locale}${linkHref(link)}`}
-                    className="inline-block py-2 md:py-0 text-sm text-white/70 hover:text-white transition-colors"
-                  >
-                    {t(link.label)}
-                  </Link>
+              <>
+                {legalColumn.links?.map((link) => (
+                  <li key={link._key}>
+                    <Link
+                      href={`/${locale}${linkHref(link)}`}
+                      className="inline-block py-2 md:py-0 text-sm text-white/70 hover:text-white transition-colors"
+                    >
+                      {t(link.label)}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <CookieSettingsButton
+                    label={locale === 'de' ? 'Cookie-Einstellungen' : 'Cookie settings'}
+                    className="inline-block py-2 md:py-0 text-sm text-left text-white/70 hover:text-white transition-colors cursor-pointer"
+                  />
                 </li>
-              ))
+              </>
             )}
         </div>
 

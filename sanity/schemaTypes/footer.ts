@@ -87,12 +87,5 @@ export default {
       title: 'Copyright',
       type: 'localeString',
     },
-    {
-      name: 'privacySettingsLabel',
-      title: 'Label for "Privacy Settings" Button',
-      description: 'Footer button that opens the Usercentrics consent management settings panel.',
-      type: 'localeString',
-      initialValue: { en: 'Privacy Settings', de: 'Datenschutzeinstellungen' },
-    },
   ],
 }

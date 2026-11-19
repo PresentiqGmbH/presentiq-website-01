@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { headers } from "next/headers";
 import { siteUrl } from "@/src/lib/siteUrl";
 import { DEFAULT_OG_IMAGE } from "@/src/lib/pageMetadata";
-import { GA_MEASUREMENT_ID, analyticsEnabled, consentDefaultScript } from "@/src/lib/analytics";
 import "./globals.css";
 
 const defaultDescription =
@@ -44,38 +42,10 @@ export default async function RootLayout({
 }) {
   const headersList = await headers();
   const locale = headersList.get("x-locale") ?? "de";
-  const usercentricsSettingsId = process.env.NEXT_PUBLIC_USERCENTRICS_SETTINGS_ID;
-  // Per-request CSP nonce from proxy.ts; scripts without it are blocked.
-  const nonce = headersList.get("x-nonce") ?? undefined;
 
   return (
     <html lang={locale}>
       <body>
-        {analyticsEnabled && (
-          <Script
-            id="consent-default"
-            strategy="beforeInteractive"
-            nonce={nonce}
-            dangerouslySetInnerHTML={{ __html: consentDefaultScript }}
-          />
-        )}
-        {usercentricsSettingsId && (
-          <Script
-            id="usercentrics-cmp"
-            src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
-            data-settings-id={usercentricsSettingsId}
-            strategy="beforeInteractive"
-            nonce={nonce}
-          />
-        )}
-        {analyticsEnabled && (
-          <Script
-            id="gtag"
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
-            nonce={nonce}
-          />
-        )}
         {children}
       </body>
     </html>
